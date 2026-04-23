@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#16a34a"/>
+  <!-- Mountain silhouette -->
+  <polygon points="256,80 420,380 92,380" fill="none" stroke="white" stroke-width="24" stroke-linejoin="round"/>
+  <!-- Inner peak -->
+  <polygon points="340,180 420,380 260,380" fill="white" opacity="0.25"/>
+  <!-- Rope line -->
+  <path d="M256 80 Q280 160 270 220 Q260 280 280 340" fill="none" stroke="white" stroke-width="10" stroke-linecap="round"/>
+</svg>
