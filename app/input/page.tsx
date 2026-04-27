@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { NewClimb } from "@/lib/types";
+import type { NewClimb, PartialClimb } from "@/lib/types";
 import { insertClimb } from "@/lib/db";
 import { EntryForm } from "@/components/entry-form";
 import { Button } from "@/components/ui/button";
@@ -13,13 +13,19 @@ export default function InputPage() {
   const router = useRouter();
   const [saved, setSaved] = useState(false);
   const [key, setKey] = useState(0);
+  const [prefillData, setPrefillData] = useState<PartialClimb | undefined>(undefined);
 
   async function handleSubmit(data: NewClimb) {
     await insertClimb(data);
+    setPrefillData({
+      ...data,
+      route_name: null,
+      pitches: data.pitches?.map((pitch) => ({ ...pitch })) ?? null,
+    });
     setSaved(true);
     setTimeout(() => {
       setSaved(false);
-      setKey((k) => k + 1);
+      setKey((k: number) => k + 1);
     }, 2000);
   }
 
@@ -45,7 +51,12 @@ export default function InputPage() {
         </div>
       )}
 
-      <EntryForm key={key} onSubmit={handleSubmit} submitLabel="Logg klatring" />
+      <EntryForm
+        key={key}
+        initialData={prefillData}
+        onSubmit={handleSubmit}
+        submitLabel="Logg klatring"
+      />
     </div>
   );
 }
